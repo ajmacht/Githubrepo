@@ -215,9 +215,10 @@ var ajax = {
    
  
    <div role="main" class="ui-content">
-   <div class="ui-grid-a">
-      <div class="ui-block-a">
-            <form><select name="filterselect" id="filterselect">
+   <table>
+   	<tr>
+    	<td width="55%">
+        <form><select name="filterselect" id="filterselect">
                    <option value="Name">Name</option>
                    <option value="Discount">Discount</option>
                    <option value="Price">Price</option>
@@ -237,10 +238,18 @@ var ajax = {
 				  
 				  				});
 				</script>
+        </td>
+        <td width="40%"><input type="text" data-role="datebox" data-options='{"mode":"calbox"}' style='display: inline;'></td>
+        <td width="5%"><a onclick="showlistto_gps()" href="javascript:void(0);" class="ui-btn ui-corner-all ui-icon-location ui-btn-icon-notext">Location Icon</a></td>
+    </tr>
+   </table>
+   <div class="ui-grid-a">
+      <div class="ui-block-a">
+            
       </div>
       <div class="ui-block-b">
-           <input type="text" data-role="datebox" data-options='{"mode":"calbox"}' style='display: inline;'>
-            <a onclick="showlistto_gps()" href="javascript:void(0);" class="ui-btn ui-corner-all ui-icon-location ui-btn-icon-notext">Location Icon</a>
+           
+            
       </div>
        
           
