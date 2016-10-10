@@ -105,10 +105,11 @@ function showlistto_discount(){
 //GPS Finder
 function showlistto_gps() {
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, 
-		{ maximumAge: 10000, timeout: 10000, enableHighAccuracy: true });
+		{ enableHighAccuracy: true });
 }
 
 function onSuccess(position) {
+	var element = document.getElementById('geolocation');
 	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_gps.cfm'
      $('#myshowlist').empty();
     $.ajax({
@@ -122,15 +123,19 @@ function onSuccess(position) {
             ajax.parseJSONP(result);
         },
         error: function (request,error) {
-            console.log(request);
-			console.log(error);
+            console.log(data.error);//console.log(request);
+			//console.log(error);
 			alert('Network error has occurred please try again!');
         }
     }); 
 }
 
-function onError(){
-	console.log("Geolocation Not Found");
+function onError(error){
+	console.log(error.code);
+	console.log(error.message);
+	//console.log("Geolocation Not Found");
+	// console.log(request);
+			//console.log(error);
 }
 
 
