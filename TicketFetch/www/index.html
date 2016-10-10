@@ -101,6 +101,41 @@ function showlistto_discount(){
     });     
 }
 
+
+//GPS Finder
+function showlistto_gps() {
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, 
+		{ maximumAge: 10000, timeout: 10000, enableHighAccuracy: true });
+}
+
+function onSuccess(position) {
+	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_gps.cfm'
+     $('#myshowlist').empty();
+    $.ajax({
+        url: url ,
+        type: 'GET',
+    	dataType: 'json',
+		lat: position.coords.latitude,
+		long: position.coords.longitude,
+    	cache: false,
+        success: function (result) {
+            ajax.parseJSONP(result);
+        },
+        error: function (request,error) {
+            console.log(request);
+			console.log(error);
+			alert('Network error has occurred please try again!');
+        }
+    }); 
+}
+
+function onError(){
+	console.log("Geolocation Not Found");
+}
+
+
+
+
 $(document).on('pagebeforeshow', '#myshowdetail', function(){      
     $('#myshowcontent').empty();
     $.each(myshowlist.result, function (i,row){
@@ -126,6 +161,7 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
         }
     });    
 });
+
 
 
 
@@ -203,8 +239,12 @@ var ajax = {
 				</script>
       </div>
       <div class="ui-block-b">
-           <input type="text" data-role="datebox" data-options='{"mode":"calbox"}' style='display: inline; width: 45%;'>
+           <input type="text" data-role="datebox" data-options='{"mode":"calbox"}' style='display: inline;'>
+            <a onclick="showlistto_gps()" href="javascript:void(0);" class="ui-btn ui-corner-all ui-icon-location ui-btn-icon-notext">Location Icon</a>
       </div>
+       
+          
+ 
 	</div>
    		
        
