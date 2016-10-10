@@ -110,21 +110,24 @@ function showlistto_gps() {
 
 function onSuccess(position) {
 	var element = document.getElementById('geolocation');
-	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_gps.cfm'
-     $('#myshowlist').empty();
+	$('#myshowlist').empty();
+	var url = 'http://ticketfetch.com/ticketfetchapi/admin_getshows_gps.cfm?lat='+ position.coords.latitude +'&long=' + position.coords.longitude +''
+     
     $.ajax({
         url: url ,
         type: 'GET',
     	dataType: 'json',
+		cache: false,
 		lat: position.coords.latitude,
 		long: position.coords.longitude,
-    	cache: false,
+    	
         success: function (result) {
             ajax.parseJSONP(result);
         },
-        error: function (request,error) {
-            console.log(data.error);//console.log(request);
-			//console.log(error);
+        error: function (xhr, status, error) {
+  
+			console.log(error.code);
+	console.log(xhr.responseText);
 			alert('Network error has occurred please try again!');
         }
     }); 
@@ -132,7 +135,8 @@ function onSuccess(position) {
 
 function onError(error){
 	console.log(error.code);
-	console.log(error.message);
+	console.log(xhr.responseText);
+	
 	//console.log("Geolocation Not Found");
 	// console.log(request);
 			//console.log(error);
