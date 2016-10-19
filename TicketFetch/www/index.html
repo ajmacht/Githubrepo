@@ -177,7 +177,7 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
             $('#myshowcontent').append('<li style="color:red">'+discount+'% OFF</li>');
 			//console.log(row.videopreview);
 			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
-			$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');
+			if (row.videopreview !== null){$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');}
 			$('#myshowcontent').append('<form>');
 			$('#myshowcontent').append('<li><div id="ticketinfo"># of Tickets: <select name="ticketselect" id="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>');
             $('#myshowcontent').append('</div></li></form>');
