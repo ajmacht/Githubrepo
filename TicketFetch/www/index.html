@@ -42,6 +42,8 @@ $(document).on('pageinit', '#home', function(){
     });         
 });
 
+
+
 function showlistto_price(){
 	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_price.js'
      $('#myshowlist').empty();
@@ -143,6 +145,20 @@ function onError(error){
 }
 
 
+function openlink(){
+	console.log(mylink);
+	//var ref = window.open(''+ link +'', "_blank");
+	var mylink = window.open(''+ link +'', "_blank");
+	console.log(mylink);
+}
+
+
+
+$(document).on('click', '#myshowcontent li.videopreview', function(){  
+	var videopreview = $(this).attr('data-id');
+	console.log(videopreview);
+    var ref = window.open(''+ videopreview +'', "_blank");
+});	
 
 
 $(document).on('pagebeforeshow', '#myshowdetail', function(){      
@@ -159,8 +175,9 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
 			
             $('#myshowcontent').append('<h1 align="center"><img src="'+largeimage+'" width="100%"><br>'+row.name+'<br></h1><center>'+showdate+'</center>');
             $('#myshowcontent').append('<li style="color:red">'+discount+'% OFF</li>');
-			
+			//console.log(row.videopreview);
 			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
+			$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');
 			$('#myshowcontent').append('<form>');
 			$('#myshowcontent').append('<li><div id="ticketinfo"># of Tickets: <select name="ticketselect" id="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select>');
             $('#myshowcontent').append('</div></li></form>');
@@ -170,8 +187,6 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
         }
     });    
 });
-
-
 
 
 
