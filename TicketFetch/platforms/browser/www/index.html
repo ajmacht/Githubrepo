@@ -144,11 +144,55 @@ function onError(error){
 	console.log(xhr.responseText);
 }
 
-// AMOUNT OF TICKETS ARE SELECTED, SHOW THE INVENTORY and CATEGORY FOR THAT SHOW
-$(document).on('change', '.ticketselect', function(){ 
-	//console.log("bob");
-	var myticketrequest=$( ".ticketselect" ).val();
-	//console.log(myticketrequest);
+
+ 
+
+
+
+// VIDEO PREVIEW
+$(document).on('click', '#myshowcontent li.videopreview', function(){  
+	var videopreview = $(this).attr('data-id');
+	console.log(videopreview);
+    var ref = window.open(''+ videopreview +'', "_blank");
+});	
+
+// PREPARE THE SHOW CONTENT PAGE
+$(document).on('pagebeforeshow', '#myshowdetail', function(){      
+    $('#myshowcontent').empty();
+    $.each(myshowlist.result, function (i,row){
+        if(row.id == myshowlist.id) {
+			localStorage.setItem("myshowselected", row.id);
+			localStorage.setItem("seatingcharturl", row.seatingcharturl);
+			var largeimage = row.imageurl.replace(".jpg", "_l.jpg");
+			var discount = Math.round(row.discount * 100);
+			var showdate = new Date(row.showdate);
+			var options = {
+				weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
+			};
+			showdate = showdate.toLocaleTimeString("en-us", options);
+			localStorage.setItem("showdate", showdate);
+			localStorage.setItem("showname", row.name);
+            $('#myshowcontent').append('<h1 align="center"><img src="'+largeimage+'" width="100%"><br>'+row.name+'<br></h1><center>'+showdate+'</center>');
+            $('#myshowcontent').append('<li style="color:red">'+discount+'% OFF</li>');
+			console.log(row.id);
+			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
+			if (row.videopreview !== null && row.videopreview !== undefined && row.videopreview !== ''){$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');}
+			$('#myshowcontent').append('<form>');
+			$('#myshowcontent').append('<li><div id="ticketselect"># of Tickets: <select name="ticketselect" class="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div></li>');
+            $('#myshowcontent').append('<li><div id="inventoryselect"></div></li>');
+            
+			$('#myshowcontent').append('</form>');
+			$('#myshowcontent').append('<h3 align="center"><img src="'+row.seatingcharturl+'" width="100%"></h3>');
+			
+            $('#myshowcontent').listview('refresh');            
+        }
+    });    
+});
+
+
+// PREPARE THE TICKET CONTENT PAGE
+$(document).on('pagebeforeshow', '#myticketdetail', function(){      
+    $('#myticketcontent').empty();
 	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_fullinventory.js'
      $('#inventoryselect').empty();
     $.ajax({
@@ -169,8 +213,15 @@ $(document).on('change', '.ticketselect', function(){
     parseJSONPInventory:function(result){  
 					inventoryselect.result = result.items;
 					var myshowselected = localStorage.getItem("myshowselected");
+					var showdate = localStorage.getItem("showdate");
+					var showname = localStorage.getItem("showname");
+					var myticketrequest = localStorage.getItem("myticketrequest");
+					var seatingcharturl = localStorage.getItem("seatingcharturl");
 					myshowselected = myshowselected.toString();
 					myshowselected = myshowselected.toLowerCase();
+					$('#myticketcontent').append('<h1 align="center">'+showname+'<br></h1><center>'+showdate+'</center>');
+					$('#myticketcontent').append('<h3 align="center"><img src="'+ seatingcharturl +'" width="100%"></h3>');
+					$('#myticketcontent').append('<div style="text-transform:none; font-weight:normal;">Choose your ticket price level:<br>Upon purchase, you will receive the best tickets available in your given price code</<div>');
 					$.each(result.items, function (i,row){
 						var thiseventid = row.eventid.toString();
 						thiseventid = thiseventid.toLowerCase();
@@ -180,61 +231,20 @@ $(document).on('change', '.ticketselect', function(){
 							console.log(row);
 							var currentprice = parseFloat(row.pricecurrent).toFixed(2);
 							var pricelevel = parseFloat(row.pricelevel).toFixed(2);
-							$('#inventoryselect').append('$' + currentprice + ' (Regularly $'+ pricelevel +')<br>');
+							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h1>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h1><psmall>' + row.description + ' </psmall></li>');
+							
+							
 						}
 						}
 					});
-        //$('#myshowlist').listview('refresh');
+        $('#myticketcontent').listview('refresh');
     }
 }	
-
-	
-	
-	
-	
-	
-});	
- 
-
-
-
-// VIDEO PREVIEW
-$(document).on('click', '#myshowcontent li.videopreview', function(){  
-	var videopreview = $(this).attr('data-id');
-	console.log(videopreview);
-    var ref = window.open(''+ videopreview +'', "_blank");
-});	
-
-// PREPARE THE SHOW CONTENT PAGE
-$(document).on('pagebeforeshow', '#myshowdetail', function(){      
-    $('#myshowcontent').empty();
-    $.each(myshowlist.result, function (i,row){
-        if(row.id == myshowlist.id) {
-			localStorage.setItem("myshowselected", row.id);
-			var largeimage = row.imageurl.replace(".jpg", "_l.jpg");
-			var discount = Math.round(row.discount * 100);
-			var showdate = new Date(row.showdate);
-			var options = {
-				weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"
-			};
-			showdate = showdate.toLocaleTimeString("en-us", options);
-			
-            $('#myshowcontent').append('<h1 align="center"><img src="'+largeimage+'" width="100%"><br>'+row.name+'<br></h1><center>'+showdate+'</center>');
-            $('#myshowcontent').append('<li style="color:red">'+discount+'% OFF</li>');
-			console.log(row.id);
-			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
-			if (row.videopreview !== null && row.videopreview !== undefined && row.videopreview !== ''){$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');}
-			$('#myshowcontent').append('<form>');
-			$('#myshowcontent').append('<li><div id="ticketselect"># of Tickets: <select name="ticketselect" class="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div></li>');
-            $('#myshowcontent').append('<li><div id="inventoryselect"></div></li>');
-            
-			$('#myshowcontent').append('</form>');
-			$('#myshowcontent').append('<h3 align="center"><img src="'+row.seatingcharturl+'" width="100%"></h3>');
-			
-            $('#myshowcontent').listview('refresh');            
-        }
-    });    
+	            
+          
 });
+
+
 
 
 // SHOW SELECTED, GO TO SHOWS DETAIL PAGE
@@ -244,6 +254,17 @@ $(document).on('click', '#myshowlist li a', function(){
 	//console.log(myshowlist.id);
     $.mobile.changePage( "#myshowdetail", { transition: "slide", changeHash: false });
 });	
+
+
+// AMOUNT OF TICKETS ARE SELECTED, TICKET INVENTORY PAGE
+$(document).on('change', '.ticketselect', function(){ 
+	//console.log("bob");
+	var myticketrequest=$( ".ticketselect" ).val();
+	localStorage.setItem("myticketrequest", myticketrequest);
+	 $.mobile.changePage( "#myticketdetail", { transition: "slide", changeHash: false });
+	
+});	
+
 
 var myshowlist = {
     id : null,
@@ -313,18 +334,7 @@ var ajax = {
         <td width="5%"><a onclick="showlistto_gps()" href="javascript:void(0);" class="ui-btn ui-corner-all ui-icon-location ui-btn-icon-notext">Location Icon</a></td>
     </tr>
    </table>
-   <div class="ui-grid-a">
-      <div class="ui-block-a">
-            
-      </div>
-      <div class="ui-block-b">
-           
-            
-      </div>
-       
-          
- 
-	</div>
+   
    		
        
         <ul data-role="listview" data-inset="true" id="myshowlist">
@@ -364,7 +374,7 @@ var ajax = {
     </div><!-- /page -->
     
     
-    
+<!-- INDIVIDUAL SHOW DETAIL PAGE -->    
 <div data-role="page" id="myshowdetail">
     <div data-role="header" data-position="fixed">
         <a href="#home" class="ui-btn-left" data-transition="slide" data-direction="reverse">Back</a>                        
@@ -379,6 +389,19 @@ var ajax = {
     </div>
 </div>    
      
+<!-- TICKET SELECTION DETAIL PAGE -->   
+<div data-role="page" id="myticketdetail">
+    <div data-role="header" data-position="fixed">
+        <a href="#home" class="ui-btn-left" data-transition="slide" data-direction="reverse">Back</a>                        
+        <h1>
+          <img src="img\logo_hor.png" style="max-width:100%;" />
+        </h1>
+    </div>        
+    <div data-role="content">
+        <ul data-role="listview" id="myticketcontent">
+        </ul>
+    </div>
+</div>   
     
 </body>
 

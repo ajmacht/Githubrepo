@@ -3697,7 +3697,7 @@ fieldset.ui-controlgroup {
 }
 
 .ui-listview > li h4{
-	font-size: 1em;
+	font-size: .6em;
 	font-weight: normal;
 	display: block;
 	margin: .1em 0;
@@ -3720,6 +3720,17 @@ fieldset.ui-controlgroup {
 	white-space: normal;
 }
 
+.ui-listview > li h6{
+	font-size: .8em;
+	font-weight: normal;
+	display: block;
+	margin: .2em 0;
+	text-overflow: ellipsis;
+	text-transform: none;
+	overflow: hidden;
+	white-space: normal;
+}
+
 .ui-listview > li p {
 	font-size: .65em;
 	font-weight: normal;
@@ -3729,6 +3740,17 @@ fieldset.ui-controlgroup {
 	overflow: hidden;
 	white-space: nowrap;
 }
+
+.ui-listview > li psmall {
+	font-size: .45em;
+	font-weight: normal;
+	display: block;
+	margin: 0;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 .ui-listview > li p2 {
 	font-size: .95em;
 	font-weight: normal;
@@ -3740,6 +3762,7 @@ fieldset.ui-controlgroup {
 	white-space: nowrap;
 	color:#F00;
 }
+
 
 .ui-listview .ui-li-aside {
 	position: absolute;
