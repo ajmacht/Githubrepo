@@ -174,14 +174,15 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
 			localStorage.setItem("showname", row.name);
             $('#myshowcontent').append('<h1 align="center"><img src="'+largeimage+'" width="100%"><br>'+row.name+'<br></h1><center>'+showdate+'</center>');
             $('#myshowcontent').append('<li style="color:red">'+discount+'% OFF</li>');
+			$('#myshowcontent').append('<form>');
+			$('#myshowcontent').append('<li><div id="ticketselect"># of Tickets: <select name="ticketselect" class="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div></li>');
+            //$('#myshowcontent').append('<li><div id="inventoryselect"></div></li>');
+            
+			$('#myshowcontent').append('</form>');
 			console.log(row.id);
 			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
 			if (row.videopreview !== null && row.videopreview !== undefined && row.videopreview !== ''){$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');}
-			$('#myshowcontent').append('<form>');
-			$('#myshowcontent').append('<li><div id="ticketselect"># of Tickets: <select name="ticketselect" class="ticketselect"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option></select></div></li>');
-            $('#myshowcontent').append('<li><div id="inventoryselect"></div></li>');
-            
-			$('#myshowcontent').append('</form>');
+			
 			$('#myshowcontent').append('<h3 align="center"><img src="'+row.seatingcharturl+'" width="100%"></h3>');
 			
             $('#myshowcontent').listview('refresh');            
@@ -211,7 +212,7 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
     });     
 	var ajax = {  
     parseJSONPInventory:function(result){  
-					inventoryselect.result = result.items;
+					myticketcontent.result = result.items;
 					var myshowselected = localStorage.getItem("myshowselected");
 					var showdate = localStorage.getItem("showdate");
 					var showname = localStorage.getItem("showname");
@@ -221,7 +222,7 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 					myshowselected = myshowselected.toLowerCase();
 					$('#myticketcontent').append('<h1 align="center">'+showname+'<br></h1><center>'+showdate+'</center>');
 					$('#myticketcontent').append('<h3 align="center"><img src="'+ seatingcharturl +'" width="100%"></h3>');
-					$('#myticketcontent').append('<div style="text-transform:none; font-weight:normal;">Choose your ticket price level:<br>Upon purchase, you will receive the best tickets available in your given price code</<div>');
+					$('#myticketcontent').append('<h6><bold>Choose your ticket price level:</bond><br>Upon purchase, you will receive the best tickets available in your given price code</h6>');
 					$.each(result.items, function (i,row){
 						var thiseventid = row.eventid.toString();
 						thiseventid = thiseventid.toLowerCase();
