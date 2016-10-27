@@ -236,7 +236,7 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 							console.log(row);
 							var currentprice = parseFloat(row.pricecurrent).toFixed(2);
 							var pricelevel = parseFloat(row.pricelevel).toFixed(2);
-							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h1>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h1><psmall>' + row.description + ' </psmall></li>');
+							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h2><h5small>' + row.description + ' </h5small></li>');
 							
 							
 						}
