@@ -156,6 +156,8 @@ $(document).on('click', '#myshowcontent li.videopreview', function(){
 });	
 
 
+// PREPPING THE NEXT PAGE TO DISPLAY AFTER SOMETHING IS SELECTED
+
 
 // PREPARE THE SHOW CONTENT PAGE
 $(document).on('pagebeforeshow', '#myshowdetail', function(){      
@@ -236,21 +238,39 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 							console.log(row);
 							var currentprice = parseFloat(row.pricecurrent).toFixed(2);
 							var pricelevel = parseFloat(row.pricelevel).toFixed(2);
-							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h2><h5small>' + row.description + ' </h5small></li>');
-							
-							
+							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h2><h5small>' + row.description + ' </h5small></li>');	
 						}
 						}
 					});
         $('#myticketcontent').listview('refresh');
     }
-}	
-	            
-          
+}	         
 });
 
 
+// PREPARE THE myselectedpacketpagecontent PAGE
+$(document).on('pagebeforeshow', '#myselectedpacketpage', function(){      
+    $('#myselectedpacketpagecontent').empty();
+	var selectedpackage = localStorage.getItem("selectedpackage");
+	var myshowselected = localStorage.getItem("myshowselected");
+	var showdate = localStorage.getItem("showdate");
+	var showname = localStorage.getItem("showname");
+	var myticketrequest = localStorage.getItem("myticketrequest");
+	var seatingcharturl = localStorage.getItem("seatingcharturl");
+	var venuename = localStorage.getItem("venuename");
+	myshowselected = myshowselected.toString();
+	myshowselected = myshowselected.toLowerCase();
+	console.log(selectedpackage);
+	$('#myselectedpacketpagecontent').append('<li style="margin-top:1em;"><h2>'+showname+'</h2><p>'+showdate+'</p><p>'+ venuename +'</p><p>SEC 103, ROW 12</p><p>SEATS 3, 4, 5</p></li>');
+	$('#myselectedpacketpagecontent').append('<li><h5small>Present the code below at the door to be scanned for entry.  Please note that some mobile devices are not compatible to be scanned so please arrive early enough to the show so that if the scanning process does not work, you may visit the box office to pick up printed tickets.  Thank you!</h5small></li>');
+	$('#myselectedpacketpagecontent').append('<li><h5small>'+selectedpackage+'</h5small></li>');
+	$('#myselectedpacketpagecontent').append('<div><img src="http://ticketfetch.com/localdealguyssite/coupon/QR/codes/20141014084029533p30265.jpg" class="myimg"></div>');
+	
+	$('#myselectedpacketpagecontent').listview('refresh');
+});
 
+
+// SOMETHING IS SELECTED AND WE ARE MOVING TO THE NEXT PAGE
 
 // SHOW SELECTED, GO TO SHOWS DETAIL PAGE
 $(document).on('click', '#myshowlist li a', function(){  
@@ -270,12 +290,27 @@ $(document).on('change', '.ticketselect', function(){
 	
 });	
 
+// SPECIFIC PRICING CODE SELECTED
+
+$(document).on('click', '#myticketcontent li a', function(){  
+	myticketcontent.id = $(this).attr('data-id');
+	//console.log(myticketcontent.id);
+	localStorage.setItem("selectedpackage", myticketcontent.id);
+	//console.log(myshowlist.id);
+    $.mobile.changePage( "#myselectedpacketpage", { transition: "slide", changeHash: false });
+});	
+	
+
+
 
 var myshowlist = {
     id : null,
     result : null
 }
-
+var myticketcontent = {
+    id : null,
+    result : null
+}
 
 // DISPLAY SHOWLIST
 var ajax = {  
@@ -382,7 +417,7 @@ var ajax = {
 <!-- INDIVIDUAL SHOW DETAIL PAGE -->    
 <div data-role="page" id="myshowdetail">
     <div data-role="header" data-position-fixed="true">
-        <a href="#home" class="ui-btn-left" data-transition="slide" data-direction="reverse">Back</a>                        
+        <a href='#home' class='ui-btn-left' data-icon='arrow-l'>Home</a>                       
         <h1>
           <img src="img\logo_hor.png" style="max-width:98%; margin:0em;" />
         </h1>
@@ -397,13 +432,27 @@ var ajax = {
 <!-- TICKET SELECTION DETAIL PAGE -->   
 <div data-role="page" id="myticketdetail">
     <div data-role="header" data-position="fixed">
-        <a href="#home" class="ui-btn-left" data-transition="slide" data-direction="reverse">Back</a>                        
+        <a href='#home' class='ui-btn-left' data-icon='arrow-l'>Home</a>               
         <h1>
           <img src="img\logo_hor.png" style="max-width:98%;" />
         </h1>
     </div>        
     <div data-role="content">
         <ul data-role="listview" id="myticketcontent">
+        </ul>
+    </div>
+</div>   
+
+<!-- TICKET SELECTED PACKAGE DETAIL PAGE -->   
+<div data-role="page" id="myselectedpacketpage">
+    <div data-role="header" data-position="fixed">
+        <a href='#home' class='ui-btn-left' data-icon='arrow-l'>Home</a>                  
+        <h1>
+          <img src="img\logo_hor.png" style="max-width:98%;" />
+        </h1>
+    </div>        
+    <div data-role="content">
+        <ul data-role="listview" id="myselectedpacketpagecontent">
         </ul>
     </div>
 </div>   

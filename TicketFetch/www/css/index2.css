@@ -88,9 +88,13 @@ div p {
 .myimg {
 width:100%;
 margin-top:1em;	
-	
 }
 
+.myimg2 {
+width:80%;
+margin-top:1em;
+align:center;	
+}
 .ui-listview>li p{
 margin:0 0 -.15em 0;	
 text-transform:uppercase;
