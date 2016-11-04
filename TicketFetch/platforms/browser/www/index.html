@@ -176,6 +176,7 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
 			localStorage.setItem("showdate", showdate);
 			localStorage.setItem("showname", row.name);
 			localStorage.setItem("venuename", row.venuename);
+			
 			$('#myshowcontent').append('<img src="'+largeimage+'" class="myimg">');
             $('#myshowcontent').append('<li><h2>'+row.name+'</h2><p>'+showdate+'</p><p>'+ row.venuename +'</p><p style="color:red">'+ discount +'% OFF</p></li>');
 			$('#myshowcontent').append('<form>');
@@ -184,10 +185,10 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
             
 			$('#myshowcontent').append('</form>');
 			console.log(row.id);
-			$('#myshowcontent').append('<li><h5>'+row.description+'</h5></li>');
+			$('#myshowcontent').append('<li><h5small>'+row.description+'</h5small></li>');
 			if (row.videopreview !== null && row.videopreview !== undefined && row.videopreview !== ''){$('#myshowcontent').append('<li class="videopreview" data-id="'+ row.videopreview +'"><button>Video Preview</button></li>');}
 			
-			$('#myshowcontent').append('<h3 align="center"><img src="'+row.seatingcharturl+'" class="myimg"></h3>');
+			//$('#myshowcontent').append('<h3 align="center"><img src="'+row.seatingcharturl+'" class="myimg"></h3>');
 			
             $('#myshowcontent').listview('refresh');            
         }
@@ -223,12 +224,12 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 					var myticketrequest = localStorage.getItem("myticketrequest");
 					var seatingcharturl = localStorage.getItem("seatingcharturl");
 					var venuename = localStorage.getItem("venuename");
+					
 					myshowselected = myshowselected.toString();
 					myshowselected = myshowselected.toLowerCase();
 					$('#myticketcontent').append('<img src="'+ seatingcharturl +'" class="myimg">');
-					$('#myticketcontent').append('<li><h2>'+showname+'</h2><p>'+showdate+'</p><p>'+ venuename +'</p></li>');
+					$('#myticketcontent').append('<li><h2>'+showname+'</h2><p>'+showdate+'</p><p>'+ venuename +'</p><h5><br>Select Price Category:</h5><h5small>Upon purchase, you will receive the best tickets available in your given price code</h5small><li>');
 					
-					$('#myticketcontent').append('<li><h5small><b>Choose your ticket price level:</b><br>Upon purchase, you will receive the best tickets available in your given price code</h5small><li>');
 					$.each(result.items, function (i,row){
 						var thiseventid = row.eventid.toString();
 						thiseventid = thiseventid.toLowerCase();
@@ -236,9 +237,13 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 						if(thiseventid == myshowselected){
 						if(row.seatstogether >= myticketrequest){
 							console.log(row);
+							
 							var currentprice = parseFloat(row.pricecurrent).toFixed(2);
 							var pricelevel = parseFloat(row.pricelevel).toFixed(2);
-							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + currentprice + ' <p>(Regularly $'+ pricelevel +')</p></h2><h5small>' + row.description + ' </h5small></li>');	
+							var discount = Math.round(currentprice/pricelevel * 100);
+							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$ ' + currentprice + ' </h2><h6small>Regular Price $' + pricelevel + ' </h6small><span class="ui-li-count">' + discount + ' % off</span></li>');	
+							//$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + row.name + '</h2><p>' + row.venuename + '</p><p2>' + discount + '% OFF</p2><span class="ui-li-count">$' + currentprice + '</span></a></li>');
+					
 						}
 						}
 					});

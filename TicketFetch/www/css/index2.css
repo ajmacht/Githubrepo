@@ -55,14 +55,22 @@ margin:0 0 0 0;
 }
 
 .ui-listview>li h5 {
-margin:0 .25em 0 .25em; 
+margin:0em 1em 0em 0em; 
 word-wrap:normal;
 font-weight:normal;
 white-space:normal;
 }
 
 .ui-listview>li h5small {
-margin:0 .25em 0 .25em; 
+margin:0em 1em 0em 0em; 
+word-wrap:normal;
+font-weight:normal;
+white-space:normal;
+font-size:.75em;
+}
+
+.ui-listview>li h6small {
+margin:0em -2em -.15em 0em; 
 word-wrap:normal;
 font-weight:normal;
 white-space:normal;
