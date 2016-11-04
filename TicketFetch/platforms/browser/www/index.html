@@ -240,7 +240,7 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 							
 							var currentprice = parseFloat(row.pricecurrent).toFixed(2);
 							var pricelevel = parseFloat(row.pricelevel).toFixed(2);
-							var discount = Math.round(currentprice/pricelevel * 100);
+							var discount = Math.round(((1 - currentprice/pricelevel)) * 100);
 							$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$ ' + currentprice + ' </h2><h6small>Regular Price $' + pricelevel + ' </h6small><span class="ui-li-count">' + discount + ' % off</span></li>');	
 							//$('#myticketcontent').append('<li class="categoryselect"><a href="" data-transition="slide" data-id="' + row.id + '"><h2>$' + row.name + '</h2><p>' + row.venuename + '</p><p2>' + discount + '% OFF</p2><span class="ui-li-count">$' + currentprice + '</span></a></li>');
 					
