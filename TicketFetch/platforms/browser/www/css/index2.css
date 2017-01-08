@@ -28,6 +28,13 @@
 }
 
 
+.ui-btn_small {
+	padding:.2em .4em;
+}
+
+.ui-btn-icon-right:after {
+	right: 1em;
+}
 
 .ui-content{
 padding: 0em 0em 1em 1em;	
@@ -116,11 +123,12 @@ color:red;
 
 span.ui-li-count.ui-body-inherit {
 	color:#FF6600;
-	font-size: 1.2em;
+	font-size: 1.0em;
+	padding: 0 .28m;
 }
 
 .ui-listview .ui-btn-icon-right .ui-li-count{
-right:1.7em;	
+right:2.4em;	
 
 }
 
