@@ -198,7 +198,7 @@ $(document).on('pagebeforeshow', '#myshowdetail', function(){
 });
 
 
-// PREPARE THE TICKET CONTENT PAGE
+// PREPARE THE TICKET CONTENT PAGE -- where we select our tickets and see the seating chart
 $(document).on('pagebeforeshow', '#myticketdetail', function(){      
     $('#myticketcontent').empty();
 	var url = 'http://ticketfetch.com/ticketfetchapi/getshows_fullinventory.js'
@@ -229,8 +229,9 @@ $(document).on('pagebeforeshow', '#myticketdetail', function(){
 					
 					myshowselected = myshowselected.toString();
 					myshowselected = myshowselected.toLowerCase();
+					
+					//$('#myticketcontent').append('<li><h2><br>'+showname+'</h2><p>'+showdate+'</p><li>');
 					$('#myticketcontent').append('<img src="'+ seatingcharturl +'" class="myimg">');
-					$('#myticketcontent').append('<li><h2>'+showname+'</h2><p>'+showdate+'</p><p>'+ venuename +'</p><h5><br>Select Price Category:</h5><h5small>Upon purchase, you will receive the best tickets available in your given price code</h5small><li>');
 					
 					$.each(result.items, function (i,row){
 						var thiseventid = row.eventid.toString();
@@ -269,10 +270,11 @@ $(document).on('pagebeforeshow', '#myselectedpacketpage', function(){
 	myshowselected = myshowselected.toLowerCase();
 	console.log(selectedpackage);
 	$('#myselectedpacketpagecontent').append('<li style="margin-top:1em;"><h2>'+showname+'</h2><p>'+showdate+'</p><p>'+ venuename +'</p><p>SEC 103, ROW 12</p><p>SEATS 3, 4, 5</p></li>');
-	$('#myselectedpacketpagecontent').append('<li><h5small>Present the code below at the door to be scanned for entry.  Please note that some mobile devices are not compatible to be scanned so please arrive early enough to the show so that if the scanning process does not work, you may visit the box office to pick up printed tickets.  Thank you!</h5small></li>');
-	$('#myselectedpacketpagecontent').append('<li><h5small>'+selectedpackage+'</h5small></li>');
-	$('#myselectedpacketpagecontent').append('<div><img src="http://ticketfetch.com/localdealguyssite/coupon/QR/codes/20141014084029533p30265.jpg" class="myimg"></div>');
 	
+	$('#myselectedpacketpagecontent').append('<div><img src="http://ticketfetch.com/localdealguyssite/coupon/QR/codes/20141014084029533p30265.jpg" class="myimg" width="80%"></div>');
+	$('#myselectedpacketpagecontent').append('<li><h5small>Present this code at the door to be scanned for entry.  Please arrive early enough to the show so that if the scanning process does not work, you may visit the box office to pick up printed tickets.</h5small></li>');
+	
+	$('#myselectedpacketpagecontent').append('<li><h5small>'+selectedpackage+'</h5small></li>');
 	$('#myselectedpacketpagecontent').listview('refresh');
 });
 

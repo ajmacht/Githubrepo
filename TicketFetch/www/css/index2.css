@@ -34,16 +34,16 @@ padding: 0em 0em 1em 1em;
 }
 
 .ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
- background-color:darkorange;	
+ background-color:#FF6600;	
  margin:0em;
 }
 
 .ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
-	color:darkorange;
+	color:#FF6600;
 }
 
 .ui-btn-up-a .ui-btn-hover-a {
-	color:darkorange;
+	color:#FF6600;
 }
 
 .ui-listview>.ui-li-has-thumb>.ui-btn, .ui-listview>.ui-li-static.ui-li-has-thumb{
@@ -95,7 +95,7 @@ div p {
 
 .myimg {
 width:100%;
-margin-top:1em;	
+margin-top:.5em;	
 }
 
 .myimg2 {
@@ -115,7 +115,7 @@ color:red;
 }
 
 span.ui-li-count.ui-body-inherit {
-	color:darkorange;
+	color:#FF6600;
 	font-size: 1.2em;
 }
 
