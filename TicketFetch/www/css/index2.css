@@ -57,6 +57,10 @@ padding: 0em 0em 1em 1em;
 padding-left: 5.45em;	
 }
 
+.ui-listview>.ui-li-static, .ui-listview>.ui-li-divider, .ui-listview>li>a.ui-btn{
+color:black;	
+}
+
 .ui-listview>li h2 {
 margin:0 0 0 0;	
 display:inline;
